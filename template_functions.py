@@ -1,19 +1,20 @@
 from template_class import Slot
 
 def check_slot(code_dic: dict, slot: object):
+    """Takes in two arguments code_dic and slot.\n"""
+    #? This function is used to check weather the related slot is free, if free returns True and sets status of related slot to 1
     res = None
     for rel_code in slot.rel_code:
         for slot in code_dic[rel_code]:
             if slot.is_empty():
                 res = True
+                slot.status = 1
             else:
                 res = False
                 break
     return res
 
-def set_subject(code_dic: dict, code: str, subject: str, freq: int): 
-    #todo: check if the related codes are emty or not. If empty, set the subject to the code (continued in next line)
-    #todo: in the argument of the function and set status of the rel_code to 1.
+def set_subject(code_dic: dict, code: str, subject: str, freq: int):
     """Takes in four arguments code_dic, code, subject and frequency(no. of slots required).\n
     code_dic is the code dictionary from the template.\n
     code is the code in which you want to set the subject.\n
@@ -24,9 +25,13 @@ def set_subject(code_dic: dict, code: str, subject: str, freq: int):
     if freq <= len(code_dic[code]):
         while i < freq:
             if code_dic[code][i].is_empty():
-                code_dic[code][i].subject = subject
-                code_dic[code][i].status = 1
-                i += 1
+                if check_slot(code_dic, code_dic[code][i]):
+                    code_dic[code][i].subject = subject
+                    code_dic[code][i].status = 1
+                    i += 1
+                else:
+                    i += 1
+                    raise Exception("Related Slot is not empty")
             else:
                 i += 1
                 raise Exception("Slot is already taken")
@@ -162,6 +167,8 @@ def makeTemplate():
         "E1":(dic["Monday"]["L"][4], dic["Wednesday"]["L"][4], dic["Friday"]["L"][4]),
         "F1":(dic["Monday"]["L"][5], dic["Wednesday"]["L"][5], dic["Friday"]["L"][5]),
         "G1":(dic["Monday"]["L"][6], dic["Tuesday"]["L"][4], dic["Thursday"]["L"][2]),
+        "H1":(dic["Tuesday"]["L"][1], dic["Thursday"]["L"][0], dic["Friday"]["L"][0]),
+        "I1":(dic["Tuesday"]["L"][0], dic["Thursday"]["L"][1], dic["Friday"]["L"][1]),
         
         "TA":(dic["Thursday"]["L"][7], dic["Friday"]["L"][6]),
         "TB":(dic["Thursday"]["L"][6], dic["Friday"]["L"][7]),
