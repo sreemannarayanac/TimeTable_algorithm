@@ -1,6 +1,25 @@
 from template_class import Slot
 
-def set_subject(code_dic, code, subject, freq):
+def check_slot(code_dic: dict, slot: object):
+    res = None
+    for rel_code in slot.rel_code:
+        for slot in code_dic[rel_code]:
+            if slot.is_empty():
+                res = True
+            else:
+                res = False
+                break
+    return res
+
+def set_subject(code_dic: dict, code: str, subject: str, freq: int): 
+    #todo: check if the related codes are emty or not. If empty, set the subject to the code (continued in next line)
+    #todo: in the argument of the function and set status of the rel_code to 1.
+    """Takes in four arguments code_dic, code, subject and frequency(no. of slots required).\n
+    code_dic is the code dictionary from the template.\n
+    code is the code in which you want to set the subject.\n
+    subject is the subject you want to set.\n
+    freq is the frequency of the subject you want to set.
+    """
     i = 0
     if freq <= len(code_dic[code]):
         while i < freq:
@@ -14,7 +33,38 @@ def set_subject(code_dic, code, subject, freq):
     elif freq > len(code_dic[code]):
         raise Exception (f"There are only {len(code_dic[code])} slots but you want to set {freq}")
 
+def set_lunch(code_dic: dict, option: int):   #todo: add security layer by ensuring that there is only one lunch slot chosen
+    """Takes in two arguments code_dic and option.\n
+    Option is of int type and takes in either 1 or 2 as input.\n
+    1 is for lunch time 12:00 to 12:50 and 
+    2 is for lunch time 13:00 to 13:50"""
+    if option == 1 or option == 2:
+        if option == 1:
+            for slot in code_dic["E1"]:
+                slot.subject = "Lunch"
+                slot.status = 1
+            code_dic["G1"][1].subject, code_dic["G1"][1].status = "Lunch", 1
+            code_dic["TE"][1].subject, code_dic["TE"][1].status = "Lunch", 1
+        elif option == 2:
+            for slot in code_dic["F1"]:
+                slot.subject = "Lunch"
+                slot.status = 1
+            code_dic["TE"][0].subject, code_dic["TE"][0].status = "Lunch", 1
+            code_dic["TF"][0].subject, code_dic["TE"][0].status = "Lunch", 1
+        code_dic["L3"][0].status = 1
+        code_dic["L7"][0].status = 1
+        code_dic["L11"][0].status = 1
+        code_dic["L15"][0].status = 1
+        code_dic["L19"][0].status = 1
+    else:
+        raise Exception("Invalid option")
+
 def makeTemplate():
+    """This function needs zero arguments and creates two template dictionary.\n
+    one template is day wise and the other is code wise.\n
+    this function returns both the template dictionary.\n
+    output: (template_dic, code_dic)"""
+    
     # Default structure 
     dic = {"Monday":{"L":[], "P":[]}, "Tuesday":{"L":[], "P":[]}, "Wednesday":{"L":[], "P":[]}, "Thursday":{"L":[], "P":[]}, "Friday":{"L":[], "P":[]}}
     
@@ -28,12 +78,12 @@ def makeTemplate():
     dic["Monday"]["L"].append(Slot("G1", 0, ["L4"], 0))
     dic["Monday"]["L"].append(Slot("TH12", 0, ["L4"], 0))
     dic["Monday"]["L"].append(Slot("TD12", 0, ["L21"], 0))
-    dic["Monday"]["L"].append(Slot("J1", 0, ["L21"], 2))      # 3 Means that the slot is should be taken in worst case scenario
+    dic["Monday"]["L"].append(Slot("J1", 0, ["L21"], 1))      
     dic["Monday"]["P"].append(Slot("L1", 1, ["A1", "B1"], 0))
     dic["Monday"]["P"].append(Slot("L2", 1, ["C1", "D1"], 0))
     dic["Monday"]["P"].append(Slot("L3", 1, ["E1", "F1"], 0))
     dic["Monday"]["P"].append(Slot("L4", 1, ["G1", "TH12"], 0))
-    dic["Monday"]["P"].append(Slot("L21", 1, ["TD12", "J1"], 2))  # 2 means thatt the slo can not be used
+    dic["Monday"]["P"].append(Slot("L21", 1, ["TD12", "J1"], 1))  
     
     # Objects of Tuesday class are created with the following parameters:
     dic["Tuesday"]["L"].append(Slot("I1", 0, ["L5"], 0))
@@ -44,13 +94,13 @@ def makeTemplate():
     dic["Tuesday"]["L"].append(Slot("TE12", 0, ["L7"], 0))
     dic["Tuesday"]["L"].append(Slot("TD11", 0, ["L8"], 0))
     dic["Tuesday"]["L"].append(Slot("TC11", 0, ["L8"], 0))
-    dic["Tuesday"]["L"].append(Slot("Student Life", None, ["L22"], 2))
-    dic["Tuesday"]["L"].append(Slot("TJ12", 0, ["L22"], 2))
+    dic["Tuesday"]["L"].append(Slot("Student Life", None, ["L22"], 1))
+    dic["Tuesday"]["L"].append(Slot("TJ12", 0, ["L22"], 1))
     dic["Tuesday"]["P"].append(Slot("L5", 1, ["I1", "H1"], 0))
     dic["Tuesday"]["P"].append(Slot("L6", 1, ["B1", "A1"], 0))
     dic["Tuesday"]["P"].append(Slot("L7", 1, ["G1", "TE12"], 0))
     dic["Tuesday"]["P"].append(Slot("L8", 1, ["TD11", "TC11"], 0))
-    dic["Tuesday"]["P"].append(Slot("L22", 1, ["Student Life", "TJ12"], 2))
+    dic["Tuesday"]["P"].append(Slot("L22", 1, ["Student Life", "TJ12"], 1))
     
     # Objects of Wednesday class are created with the following parameters:
     dic["Wednesday"]["L"].append(Slot("B1", 0, ["L9"], 0))
@@ -61,13 +111,13 @@ def makeTemplate():
     dic["Wednesday"]["L"].append(Slot("F1", 0, ["L11"], 0))
     dic["Wednesday"]["L"].append(Slot("TH11", 0, ["L12"], 0))
     dic["Wednesday"]["L"].append(Slot("TI11", 0, ["L12"], 0))
-    dic["Wednesday"]["L"].append(Slot("Student Life", 0, ["L23"], 2))
-    dic["Wednesday"]["L"].append(Slot("J1", 0, ["L23"], 2))
+    dic["Wednesday"]["L"].append(Slot("Student Life", 0, ["L23"], 1))
+    dic["Wednesday"]["L"].append(Slot("J1", 0, ["L23"], 1))
     dic["Wednesday"]["P"].append(Slot("L9", 1, ["B1", "A1"], 0))
     dic["Wednesday"]["P"].append(Slot("L10", 1, ["C1", "D1"], 0))
     dic["Wednesday"]["P"].append(Slot("L11", 1, ["E1", "F1"], 0))
     dic["Wednesday"]["P"].append(Slot("L12", 1, ["TH11", "TI11"], 0))
-    dic["Wednesday"]["P"].append(Slot("L23", 1, ["Student Life", "J1"], 2))
+    dic["Wednesday"]["P"].append(Slot("L23", 1, ["Student Life", "J1"], 1))
     
     # Objects of Thursday class are created with the following parameters:
     dic["Thursday"]["L"].append(Slot("H1", 0, ["L13"], 0))
@@ -78,13 +128,13 @@ def makeTemplate():
     dic["Thursday"]["L"].append(Slot("TF11", 0, ["L15"], 0))
     dic["Thursday"]["L"].append(Slot("TB12", 0, ["L16"], 0))
     dic["Thursday"]["L"].append(Slot("TA12", 0, ["L16"], 0))
-    dic["Thursday"]["L"].append(Slot("Student Life", 0, ["L24"], 2))
-    dic["Thursday"]["L"].append(Slot("TJ11", 0, ["L24"], 2))
+    dic["Thursday"]["L"].append(Slot("Student Life", 0, ["L24"], 1))
+    dic["Thursday"]["L"].append(Slot("TJ11", 0, ["L24"], 1))
     dic["Thursday"]["P"].append(Slot("L13", 1, ["H1", "I1"], 0))
     dic["Thursday"]["P"].append(Slot("L14", 1, ["G1", "TC12"], 0))
     dic["Thursday"]["P"].append(Slot("L15", 1, ["TE11", "TF11"], 0))
     dic["Thursday"]["P"].append(Slot("L16", 1, ["TB12", "TA12"], 0))
-    dic["Thursday"]["P"].append(Slot("L24", 1, ["Student Life", "TJ11"], 2))
+    dic["Thursday"]["P"].append(Slot("L24", 1, ["Student Life", "TJ11"], 1))
     
     # Objects of Friday class are created with the following parameters:
     dic["Friday"]["L"].append(Slot("H1", 0, ["L17"], 0))
@@ -95,13 +145,13 @@ def makeTemplate():
     dic["Friday"]["L"].append(Slot("F1", 0, ["L19"], 0))
     dic["Friday"]["L"].append(Slot("TA11", 0, ["L20"], 0))
     dic["Friday"]["L"].append(Slot("TB11", 0, ["L20"], 0))
-    dic["Friday"]["L"].append(Slot("Student Life", 0, ["L25"], 2))
-    dic["Friday"]["L"].append(Slot("J1", 0, ["L25"], 2))
+    dic["Friday"]["L"].append(Slot("Student Life", 0, ["L25"], 1))
+    dic["Friday"]["L"].append(Slot("J1", 0, ["L25"], 1))
     dic["Friday"]["P"].append(Slot("L17", 1, ["H1", "I1"], 0))
     dic["Friday"]["P"].append(Slot("L18", 1, ["D1", "C1"], 0))
     dic["Friday"]["P"].append(Slot("L19", 1, ["E1", "F1"], 0))
     dic["Friday"]["P"].append(Slot("L20", 1, ["TA11", "TB11"], 0))
-    dic["Friday"]["P"].append(Slot("L25", 1, ["Student Life", "J1"], 2))
+    dic["Friday"]["P"].append(Slot("L25", 1, ["Student Life", "J1"], 1))
     
     code_dic = {
         # Theory
