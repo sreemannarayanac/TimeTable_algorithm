@@ -55,7 +55,7 @@ def set_lunch(code_dic: dict, option: int):   #todo: add security layer by ensur
                 slot.subject = "Lunch"
                 slot.status = 1
             code_dic["TE"][0].subject, code_dic["TE"][0].status = "Lunch", 1
-            code_dic["TF"][0].subject, code_dic["TE"][0].status = "Lunch", 1
+            code_dic["TF"][0].subject, code_dic["TF"][0].status = "Lunch", 1
         code_dic["L3"][0].status = 1
         code_dic["L7"][0].status = 1
         code_dic["L11"][0].status = 1
@@ -83,12 +83,12 @@ def makeTemplate():
     dic["Monday"]["L"].append(Slot("G1", 0, ["L4"], 0))
     dic["Monday"]["L"].append(Slot("TH12", 0, ["L4"], 0))
     dic["Monday"]["L"].append(Slot("TD12", 0, ["L21"], 0))
-    dic["Monday"]["L"].append(Slot("J1", 0, ["L21"], 1))      
+    dic["Monday"]["L"].append(Slot("J1", 0, ["L21"], 0))      
     dic["Monday"]["P"].append(Slot("L1", 1, ["A1", "B1"], 0))
     dic["Monday"]["P"].append(Slot("L2", 1, ["C1", "D1"], 0))
     dic["Monday"]["P"].append(Slot("L3", 1, ["E1", "F1"], 0))
     dic["Monday"]["P"].append(Slot("L4", 1, ["G1", "TH12"], 0))
-    dic["Monday"]["P"].append(Slot("L21", 1, ["TD12", "J1"], 1))  
+    dic["Monday"]["P"].append(Slot("L21", 1, ["TD12", "J1"], 0))  
     
     # Objects of Tuesday class are created with the following parameters:
     dic["Tuesday"]["L"].append(Slot("I1", 0, ["L5"], 0))
@@ -99,13 +99,13 @@ def makeTemplate():
     dic["Tuesday"]["L"].append(Slot("TE12", 0, ["L7"], 0))
     dic["Tuesday"]["L"].append(Slot("TD11", 0, ["L8"], 0))
     dic["Tuesday"]["L"].append(Slot("TC11", 0, ["L8"], 0))
-    dic["Tuesday"]["L"].append(Slot("Student Life", None, ["L22"], 1))
-    dic["Tuesday"]["L"].append(Slot("TJ12", 0, ["L22"], 1))
+    dic["Tuesday"]["L"].append(Slot("Student Life", None, ["L22"], 0))
+    dic["Tuesday"]["L"].append(Slot("TJ12", 0, ["L22"], 0))
     dic["Tuesday"]["P"].append(Slot("L5", 1, ["I1", "H1"], 0))
     dic["Tuesday"]["P"].append(Slot("L6", 1, ["B1", "A1"], 0))
     dic["Tuesday"]["P"].append(Slot("L7", 1, ["G1", "TE12"], 0))
     dic["Tuesday"]["P"].append(Slot("L8", 1, ["TD11", "TC11"], 0))
-    dic["Tuesday"]["P"].append(Slot("L22", 1, ["Student Life", "TJ12"], 1))
+    dic["Tuesday"]["P"].append(Slot("L22", 1, ["Student Life", "TJ12"], 0))
     
     # Objects of Wednesday class are created with the following parameters:
     dic["Wednesday"]["L"].append(Slot("B1", 0, ["L9"], 0))
@@ -116,13 +116,13 @@ def makeTemplate():
     dic["Wednesday"]["L"].append(Slot("F1", 0, ["L11"], 0))
     dic["Wednesday"]["L"].append(Slot("TH11", 0, ["L12"], 0))
     dic["Wednesday"]["L"].append(Slot("TI11", 0, ["L12"], 0))
-    dic["Wednesday"]["L"].append(Slot("Student Life", 0, ["L23"], 1))
-    dic["Wednesday"]["L"].append(Slot("J1", 0, ["L23"], 1))
+    dic["Wednesday"]["L"].append(Slot("Student Life", None, ["L23"], 0))
+    dic["Wednesday"]["L"].append(Slot("J1", 0, ["L23"], 0))
     dic["Wednesday"]["P"].append(Slot("L9", 1, ["B1", "A1"], 0))
     dic["Wednesday"]["P"].append(Slot("L10", 1, ["C1", "D1"], 0))
     dic["Wednesday"]["P"].append(Slot("L11", 1, ["E1", "F1"], 0))
     dic["Wednesday"]["P"].append(Slot("L12", 1, ["TH11", "TI11"], 0))
-    dic["Wednesday"]["P"].append(Slot("L23", 1, ["Student Life", "J1"], 1))
+    dic["Wednesday"]["P"].append(Slot("L23", 1, ["Student Life", "J1"], 0))
     
     # Objects of Thursday class are created with the following parameters:
     dic["Thursday"]["L"].append(Slot("H1", 0, ["L13"], 0))
@@ -133,13 +133,13 @@ def makeTemplate():
     dic["Thursday"]["L"].append(Slot("TF11", 0, ["L15"], 0))
     dic["Thursday"]["L"].append(Slot("TB12", 0, ["L16"], 0))
     dic["Thursday"]["L"].append(Slot("TA12", 0, ["L16"], 0))
-    dic["Thursday"]["L"].append(Slot("Student Life", 0, ["L24"], 1))
-    dic["Thursday"]["L"].append(Slot("TJ11", 0, ["L24"], 1))
+    dic["Thursday"]["L"].append(Slot("Student Life", None, ["L24"], 0))
+    dic["Thursday"]["L"].append(Slot("TJ11", 0, ["L24"], 0))
     dic["Thursday"]["P"].append(Slot("L13", 1, ["H1", "I1"], 0))
     dic["Thursday"]["P"].append(Slot("L14", 1, ["G1", "TC12"], 0))
     dic["Thursday"]["P"].append(Slot("L15", 1, ["TE11", "TF11"], 0))
     dic["Thursday"]["P"].append(Slot("L16", 1, ["TB12", "TA12"], 0))
-    dic["Thursday"]["P"].append(Slot("L24", 1, ["Student Life", "TJ11"], 1))
+    dic["Thursday"]["P"].append(Slot("L24", 1, ["Student Life", "TJ11"], 0))
     
     # Objects of Friday class are created with the following parameters:
     dic["Friday"]["L"].append(Slot("H1", 0, ["L17"], 0))
@@ -150,13 +150,13 @@ def makeTemplate():
     dic["Friday"]["L"].append(Slot("F1", 0, ["L19"], 0))
     dic["Friday"]["L"].append(Slot("TA11", 0, ["L20"], 0))
     dic["Friday"]["L"].append(Slot("TB11", 0, ["L20"], 0))
-    dic["Friday"]["L"].append(Slot("Student Life", 0, ["L25"], 1))
-    dic["Friday"]["L"].append(Slot("J1", 0, ["L25"], 1))
+    dic["Friday"]["L"].append(Slot("Student Life", None, ["L25"], 0))
+    dic["Friday"]["L"].append(Slot("J1", 0, ["L25"], 0))
     dic["Friday"]["P"].append(Slot("L17", 1, ["H1", "I1"], 0))
     dic["Friday"]["P"].append(Slot("L18", 1, ["D1", "C1"], 0))
     dic["Friday"]["P"].append(Slot("L19", 1, ["E1", "F1"], 0))
     dic["Friday"]["P"].append(Slot("L20", 1, ["TA11", "TB11"], 0))
-    dic["Friday"]["P"].append(Slot("L25", 1, ["Student Life", "J1"], 1))
+    dic["Friday"]["P"].append(Slot("L25", 1, ["Student Life", "J1"], 0))
     
     code_dic = {
         # Theory
@@ -210,4 +210,55 @@ def makeTemplate():
         "L25":(dic["Friday"]["P"][4], ),
         }
     
-    return (dic, code_dic)
+    filled_codes = {
+        "A1":(),
+        "B1":(),
+        "C1":(),
+        "D1":(),
+        "E1":(),
+        "F1":(),
+        "G1":(),
+        "H1":(),
+        "I1":(),
+        
+        "TA":(),
+        "TB":(),
+        "TC":(),
+        "TD":(),
+        "TE":(),
+        "TF":(),
+        "TH":(),
+        "TI":(),
+        #Labs
+        "L1":(),
+        "L2":(),
+        "L3":(),
+        "L4":(),
+        "L21":(),
+        
+        "L5":(),
+        "L6":(),
+        "L7":(),
+        "L8":(),
+        "L22":(),
+        
+        "L9":(),
+        "L10":(),
+        "L11":(),
+        "L12":(),
+        "L23":(),
+        
+        "L13":(),
+        "L14":(),
+        "L15":(),
+        "L16":(),
+        "L24":(),
+        
+        "L17":(),
+        "L18":(),
+        "L19":(),
+        "L20":(),
+        "L25":(),
+    }
+    
+    return (dic, code_dic, filled_codes)
