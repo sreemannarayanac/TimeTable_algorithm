@@ -14,29 +14,39 @@ def check_slot(code_dic: dict, slot: object):
                 break
     return res
 
-def set_subject(code_dic: dict, code: str, subject: str, freq: int): #todo: add functionality of moving slots from code_dic to filled_slots dictionary after setting subject
-    """Takes in four arguments code_dic, code, subject and frequency(no. of slots required).\n
+def set_subject(code_dic: dict, filled_codes: dict, code: str, subject: str, freq: int): #todo: add functionality of moving slots from code_dic to filled_slots dictionary after setting subject
+    """Takes in five arguments code_dic, filled_codes, code, subject and frequency(no. of slots required).\n
     code_dic is the code dictionary from the template.\n
+    filled_codes is the empty dictionary of filled codes.\n
     code is the code in which you want to set the subject.\n
     subject is the subject you want to set.\n
     freq is the frequency of the subject you want to set.
     """
     i = 0
+    code_dic[code] = list(code_dic[code])
+    filled_codes[code] = list(filled_codes[code])
+    batch_codes = []
     if freq <= len(code_dic[code]):
         while i < freq:
             if code_dic[code][i].is_empty():
                 if check_slot(code_dic, code_dic[code][i]):
                     code_dic[code][i].subject = subject
                     code_dic[code][i].status = 1
+                    batch_codes.append(code_dic[code][i])
                     i += 1
                 else:
                     i += 1
                     raise Exception("Related Slot is not empty")
             else:
                 i += 1
-                raise Exception("Slot is already taken")
+                raise Exception("Slot is not empty. Please choose another slot")
     elif freq > len(code_dic[code]):
         raise Exception (f"There are only {len(code_dic[code])} slots but you want to set {freq}")
+    for b_code in batch_codes:
+        filled_codes[code].append(b_code)
+        code_dic[code].remove(b_code)
+    code_dic[code] = tuple(code_dic[code])
+    filled_codes[code] = tuple(filled_codes[code])
 
 def set_lunch(code_dic: dict, option: int):   #todo: add security layer by ensuring that there is only one lunch slot chosen
     """Takes in two arguments code_dic and option.\n
