@@ -16,10 +16,10 @@ def check_slot(code_dic: dict, slot: object):
 
 def set_subject(code_dic: dict, code: str, subject: str, freq: int):
     """Takes in four arguments code_dic, code, subject and frequency(no. of slots required).\n
-    code_dic is the code dictionary from the template.\n
-    code is the code in which you want to set the subject.\n
-    subject is the subject you want to set.\n
-    freq is the frequency of the subject you want to set.
+    'code_dic' is the code dictionary from the template.\n
+    'code' is the code in which you want to set the subject.\n
+    'subject' is the subject you want to set.\n
+    'freq' is the frequency of the subject you want to set.
     """
     i = 0
     if freq <= len(code_dic[code]):
