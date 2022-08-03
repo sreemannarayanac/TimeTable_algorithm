@@ -14,13 +14,14 @@ def check_slot(code_dic: dict, slot: object):
                 break
     return res
 
-def set_subject(code_dic: dict, filled_codes: dict, code: str, subject: str, freq: int): #todo: add functionality of moving slots from code_dic to filled_slots dictionary after setting subject
-    """Takes in five arguments code_dic, filled_codes, code, subject and frequency(no. of slots required).\n
-    code_dic is the code dictionary from the template.\n
-    filled_codes is the empty dictionary of filled codes.\n
-    code is the code in which you want to set the subject.\n
-    subject is the subject you want to set.\n
-    freq is the frequency of the subject you want to set.
+
+def set_subject(code_dic: dict, code: str, subject: str, freq: int):
+    """Takes in four arguments code_dic, code, subject and frequency(no. of slots required).\n
+    'code_dic' is the code dictionary from the template.\n
+    'filled_codes' is the empty dictionary of filled codes.\n
+    'code' is the code in which you want to set the subject.\n
+    'subject' is the subject you want to set.\n
+    'freq' is the frequency of the subject you want to set.
     """
     i = 0
     code_dic[code] = list(code_dic[code])
