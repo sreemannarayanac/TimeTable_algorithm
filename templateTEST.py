@@ -7,9 +7,3 @@ set_subject(b, c, 'L2', 'PHYS1001P', 1)
 
 set_lunch(b, 2)
 print(c)
-
-#1
-#2
-#3
-#4
-#5
