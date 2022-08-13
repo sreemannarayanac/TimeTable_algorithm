@@ -43,14 +43,31 @@ syllabus = { # L, T, P, A, C
     "CSD": [0, 0, 0, 6, 1]
 }
 
+def sortSyllabus(syllabus):
+    """ Sorting inputted syllabus according to number of practicals """
+    practLec = set()
+    subs = []
+    resDict = {}
 
+    for key in syllabus.keys():
+        obj = syllabus[key][2]
+        practLec.add(obj)
 
-def sortSyllabus(syllabusInput: dict) -> tuple:
-    """ Sorting of subjects according to preference here """
-    pass
+    while (len(practLec) > 0):
+        maxCredit = max(practLec)
+        practLec.remove(maxCredit)
+
+        for key in syllabus.keys():
+            if syllabus[key][2] == maxCredit:
+                subs.append(key)
+           
+    for i in subs:
+        resDict[i] = syllabus[i]
+    
+    return resDict
 
 def isLectures(syllabusInput) -> bool:
-    """ Tells """
+    """ Notifies whether if total number of lectures are greater than total number of practicals """
     l, p = None, None
     for details in syllabusInput.values():
         l += details[0]
