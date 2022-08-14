@@ -43,7 +43,30 @@ syllabus = { # L, T, P, A, C
     "CSD": [0, 0, 0, 6, 1]
 }
 
-def sortSyllabus(syllabus):
+def sortByLectures(syllabus):
+    """ Sorting inputted data according to number of lecture hours """
+    practLec = set()
+    subs = []
+    resDict = {}
+
+    for key in syllabus.keys():
+        obj = syllabus[key][0]
+        practLec.add(obj)
+
+    while (len(practLec) > 0):
+        maxCredit = max(practLec)
+        practLec.remove(maxCredit)
+
+        for key in syllabus.keys():
+            if syllabus[key][0] == maxCredit:
+                subs.append(key)
+           
+    for i in subs:
+        resDict[i] = syllabus[i]
+    
+    return resDict
+
+def sortByPractials(syllabus):
     """ Sorting inputted syllabus according to number of practicals """
     practLec = set()
     subs = []
