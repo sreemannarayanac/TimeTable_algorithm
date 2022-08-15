@@ -49,7 +49,7 @@ def set_subject(code_dic: dict, filled_codes: dict, code: str, subject: str, fre
     code_dic[code] = tuple(code_dic[code])
     filled_codes[code] = tuple(filled_codes[code])
 
-def set_lunch(code_dic: dict, option: int):   #todo: add security layer by ensuring that there is only one lunch slot chosen
+def set_lunch(code_dic: dict, option: int):
     """Takes in two arguments code_dic and option.\n
     Option is of int type and takes in either 1 or 2 as input.\n
     1 is for lunch time 12:00 to 12:50 and 
@@ -273,3 +273,28 @@ def makeTemplate():
     }
     
     return (dic, code_dic, filled_codes)
+
+def gen_time_table(dic: dict) -> dict:
+    """Takes in one argument (a day wise dictionary obtained by makeTemplate function)
+    \nGenerates a time table format (with subject codes instead of objects) suitable for storage and front end purposes"""
+    
+    res_dict = {"Monday":{"L":[], "P":[]}, "Tuesday":{"L":[], "P":[]}, "Wednesday":{"L":[], "P":[]}, "Thursday":{"L":[], "P":[]}, "Friday":{"L":[], "P":[]}}
+    
+    #*"""Adding None to all the slots"""
+    for i in res_dict.keys():
+        for j in res_dict[i].keys():
+            if j == "L":
+                res_dict[i][j] = [None]*8
+            elif j == "P":
+                res_dict[i][j] = [None]*4
+            else:
+                raise Exception("Something went wrong")
+    
+    #*"""Filling the slots"""
+    for i in dic.keys():
+        for j in dic[i].keys():
+            for slot_number in range(len(dic[i][j])):
+                if dic[i][j][slot_number].is_empty() == False:
+                    res_dict[i][j][slot_number] = dic[i][j][slot_number].subject
+
+    return res_dict

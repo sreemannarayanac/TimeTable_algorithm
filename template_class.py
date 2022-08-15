@@ -1,5 +1,7 @@
 class Slot:
     
+    __slots__ = ('code', 'slot_type', 'rel_code', 'status', 'subject')
+    
     def __init__(self, code, slot_type, rel_code, status):
         self.code = code
         self.slot_type = slot_type  # 0 means that the slot is Theory Type, 1 means that the slot is Practical Type
