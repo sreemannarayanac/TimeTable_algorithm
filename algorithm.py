@@ -31,71 +31,32 @@ Sreeman:
     2.  Assigning lab slots
     3.
 """
-#* Step 1: Inputs
-syllabus = {  # L, T, P, A, C
-    "NM": [3, 0, 0, 0, 3],  # slots by hours
-    "IOT": [2, 0, 2, 0, 3],
-    "COA": [3, 0, 0, 0, 3],
-    "OS": [3, 0, 0, 0, 3],
-    "CN": [3, 0, 2, 0, 4],
-    "DAA": [3, 0, 2, 0, 4],
-    "ES": [3, 0, 0, 0, 0],
-    "CSD": [0, 0, 0, 6, 1]
-}
 
-# n_sets = int(input("Enter number of sets: "))
-n_sets = 3
-
-""" If number of sets is 3 or less than only one lunch slot for every set, else two lunch slots are needed to make more distinct sets. """
 
 #* Step 2: Processing given data
-def sortByLectures(syllabus):
-    """ Sorting inputted data according to number of lecture hours """
+def sortByCategory(syllabus: dict, category: int) -> dict:
+    """ Takes in two arguments, syllabus and category, and returns a dictionary of sorted syllabus according to category \n categor 1 -> lectures, 2 -> tutorials, 3 -> practicals, 4 -> activities """
     practLec = set()
     subs = []
     resDict = {}
 
     for key in syllabus.keys():
-        obj = syllabus[key][0]
-        practLec.add(obj)
+        if syllabus[key][category-1]>0:
+            obj = syllabus[key][category-1]
+            practLec.add(obj)
 
     while (len(practLec) > 0):
         maxCredit = max(practLec)
         practLec.remove(maxCredit)
 
         for key in syllabus.keys():
-            if syllabus[key][0] == maxCredit:
+            if syllabus[key][category-1] == maxCredit:
                 subs.append(key)
 
     for i in subs:
         resDict[i] = syllabus[i]
 
     return resDict
-
-
-def sortByPractials(syllabus):
-    """ Sorting inputted syllabus according to number of practicals """
-    practLec = set()
-    subs = []
-    resDict = {}
-
-    for key in syllabus.keys():
-        obj = syllabus[key][2]
-        practLec.add(obj)
-
-    while (len(practLec) > 0):
-        maxCredit = max(practLec)
-        practLec.remove(maxCredit)
-
-        for key in syllabus.keys():
-            if syllabus[key][2] == maxCredit:
-                subs.append(key)
-
-    for i in subs:
-        resDict[i] = syllabus[i]
-
-    return resDict
-
 
 def isLectures(syllabusInput) -> bool:
     """ Notifies whether if total number of lectures are greater than total number of practicals """
